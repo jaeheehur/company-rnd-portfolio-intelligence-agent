@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ company }} 경쟁사 인텔리전스 리포트</title>
+  <style>
+    body { font-family: "Pretendard", "Noto Sans KR", sans-serif; max-width: 960px; margin: 0 auto; padding: 2rem; color: #1a1a2e; }
+    h1 { border-bottom: 3px solid #4361ee; padding-bottom: .5rem; }
+    h2 { color: #3a0ca3; margin-top: 2rem; }
+    h3 { color: #4361ee; }
+    .badge { display: inline-block; padding: .2em .6em; border-radius: 4px; font-size: .8em; font-weight: bold; }
+    .trl { background: #e0f2fe; color: #0369a1; }
+    .crl { background: #dcfce7; color: #166534; }
+    .meta { color: #6b7280; font-size: .9em; }
+    .summary-box { background: #f0f4ff; border-left: 4px solid #4361ee; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 4px; }
+    .patent-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; margin: .75rem 0; }
+    .cross-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .cross-item { background: #fafafa; border: 1px solid #e5e7eb; border-radius: 6px; padding: .75rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th { background: #4361ee; color: white; padding: .5rem; }
+    td { border: 1px solid #e5e7eb; padding: .5rem; text-align: right; }
+    td:first-child { text-align: left; }
+  </style>
+</head>
+<body>
+
+<h1>{{ company }} 경쟁사 기술 인텔리전스</h1>
+<p class="meta">생성일: {{ report_date }}</p>
+
+<!-- Executive Summary -->
+<div class="summary-box">
+  <h2 style="margin-top:0">Executive Summary</h2>
+  <p>{{ executive_summary }}</p>
+</div>
+
+<!-- Chapter 1: 기업 개요 -->
+<h2>1. 기업 개요</h2>
+<p>{{ chapters.overview }}</p>
+
+<h3>재무 현황 ({{ finance.currency }})</h3>
+<table>
+  <tr>
+    <th>항목</th>
+    {% for y in finance.years %}<th>{{ y }}</th>{% endfor %}
+  </tr>
+  <tr>
+    <td>매출액</td>
+    {% for v in finance.revenue %}<td>{{ "{:,.0f}".format(v) }}</td>{% endfor %}
+  </tr>
+  <tr>
+    <td>R&amp;D 비용</td>
+    {% for v in finance.rnd_expense %}<td>{{ "{:,.0f}".format(v) }}</td>{% endfor %}
+  </tr>
+</table>
+
+<!-- Chapter 2: 산업 동향 -->
+<h2>2. 산업 동향</h2>
+<p>{{ chapters.industry }}</p>
+
+<!-- Chapter 3: 기술 평가 -->
+<h2>3. 기술 평가</h2>
+<p>{{ chapters.tech_eval }}</p>
+
+<h3>핵심 특허 분석</h3>
+{% for patent in top_patents %}
+<div class="patent-card">
+  <strong>{{ loop.index }}. {{ patent.title }}</strong>
+  <span class="badge trl">TRL {{ patent.trl }}</span>
+  <span class="badge crl">CRL {{ patent.crl }}</span>
+  <p class="meta">출원인: {{ patent.applicant }} | 출원연도: {{ patent.filing_year }} | IPC: {{ patent.ipc_codes | join(', ') }}</p>
+  <ul>
+    <li><b>문제:</b> {{ patent.analysis_4d.problem }}</li>
+    <li><b>접근:</b> {{ patent.analysis_4d.approach }}</li>
+    <li><b>효과:</b> {{ patent.analysis_4d.impact }}</li>
+    <li><b>차별성:</b> {{ patent.analysis_4d.differentiation }}</li>
+  </ul>
+</div>
+{% endfor %}
+
+<!-- 교차검증 -->
+<h2>4. 교차검증 인사이트</h2>
+<div class="cross-grid">
+  <div class="cross-item">
+    <h3>R&amp;D-특허 시차</h3>
+    <p>{{ cross_validation.patent_rnd_lag }}</p>
+  </div>
+  <div class="cross-item">
+    <h3>기술-매출 연계</h3>
+    <p>{{ cross_validation.tech_revenue_link }}</p>
+  </div>
+  <div class="cross-item">
+    <h3>뉴스-특허 정합</h3>
+    <p>{{ cross_validation.news_patent_alignment }}</p>
+  </div>
+  <div class="cross-item">
+    <h3>상용화 시그널</h3>
+    <p>{{ cross_validation.commercialization_signal }}</p>
+  </div>
+</div>
+
+</body>
+</html>
