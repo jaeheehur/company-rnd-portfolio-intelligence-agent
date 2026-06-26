@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ final.confirmed_company.name }} 분석 결과{% endblock %}
+{% block content %}
+
+{% set company = final.confirmed_company.name %}
+{% set cv = final.cross_validation %}
+{% set finance = final.finance %}
+
+<h1>{{ company }} 인텔리전스 리포트</h1>
+
+<!-- 요약 지표 -->
+<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.25rem">
+  <div class="card" style="text-align:center; padding:1rem">
+    <div style="font-size:2rem; font-weight:700; color:#4361ee">{{ final.news | length }}</div>
+    <div style="font-size:.85rem; color:#6b7280">수집 뉴스</div>
+  </div>
+  <div class="card" style="text-align:center; padding:1rem">
+    <div style="font-size:2rem; font-weight:700; color:#4361ee">{{ final.patents | length }}</div>
+    <div style="font-size:.85rem; color:#6b7280">분석 특허</div>
+  </div>
+  <div class="card" style="text-align:center; padding:1rem">
+    <div style="font-size:2rem; font-weight:700; color:#4361ee">{{ finance.years | length }}</div>
+    <div style="font-size:.85rem; color:#6b7280">재무 데이터 연도</div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="card" style="border-left:4px solid #4361ee">
+  <h2 style="margin-top:0">Executive Summary</h2>
+  <p style="line-height:1.75">{{ cv.summary }}</p>
+</div>
+
+<!-- 교차검증 인사이트 -->
+<h2>교차검증 인사이트</h2>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
+  <div class="card">
+    <strong style="font-size:.85rem; color:#6b7280">R&amp;D–특허 시차</strong>
+    <p style="margin-top:.5rem; font-size:.95rem">{{ cv.patent_rnd_lag }}</p>
+  </div>
+  <div class="card">
+    <strong style="font-size:.85rem; color:#6b7280">기술–매출 연계</strong>
+    <p style="margin-top:.5rem; font-size:.95rem">{{ cv.tech_revenue_link }}</p>
+  </div>
+  <div class="card">
+    <strong style="font-size:.85rem; color:#6b7280">뉴스–특허 정합</strong>
+    <p style="margin-top:.5rem; font-size:.95rem">{{ cv.news_patent_alignment }}</p>
+  </div>
+  <div class="card">
+    <strong style="font-size:.85rem; color:#6b7280">상용화 시그널</strong>
+    <p style="margin-top:.5rem; font-size:.95rem">{{ cv.commercialization_signal }}</p>
+  </div>
+</div>
+
+<!-- 리포트 전문 -->
+<h2>전문 리포트</h2>
+<div class="card" style="padding:0; overflow:hidden">
+  <iframe srcdoc="{{ final.final_report_html | e }}"
+          style="width:100%; height:700px; border:none"></iframe>
+</div>
+
+<div style="margin-top:1.25rem; display:flex; gap:.75rem">
+  <a class="btn btn-primary" href="/download">리포트 다운로드 (.html)</a>
+  <a class="btn btn-outline" href="/reset">새 분석</a>
+</div>
+
+{% endblock %}

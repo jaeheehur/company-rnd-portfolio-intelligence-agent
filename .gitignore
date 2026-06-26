@@ -4,8 +4,6 @@ __pycache__/
 *.pyo
 .DS_Store
 data/reports/
-*.html
-!templates/
 .venv/
 venv/
 *.egg-info/

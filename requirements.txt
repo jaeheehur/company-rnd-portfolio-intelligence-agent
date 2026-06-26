@@ -3,7 +3,7 @@ langchain-core>=0.3
 google-genai>=1.0
 google-cloud-bigquery>=3.0
 db-dtypes
-streamlit>=1.35
+flask>=3.0
 tavily-python
 yfinance
 jinja2

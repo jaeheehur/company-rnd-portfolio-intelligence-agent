@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Competitor Intelligence Agent{% endblock %}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Pretendard", "Noto Sans KR", sans-serif; background: #f8f9fc; color: #1a1a2e; min-height: 100vh; }
+    nav { background: #1a1a2e; color: white; padding: .75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: #a5b4fc; text-decoration: none; font-size: .9em; }
+    nav a:hover { color: white; }
+    .container { max-width: 860px; margin: 2.5rem auto; padding: 0 1.5rem; }
+    h1 { font-size: 1.6rem; color: #1a1a2e; margin-bottom: 1.5rem; }
+    h2 { font-size: 1.2rem; color: #3a0ca3; margin: 1.5rem 0 .75rem; }
+    .card { background: white; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 1.75rem; margin-bottom: 1.25rem; }
+    label { display: block; font-size: .85rem; font-weight: 600; color: #4b5563; margin-bottom: .35rem; }
+    input[type="text"] { width: 100%; padding: .6rem .9rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 1rem; outline: none; }
+    input[type="text"]:focus { border-color: #4361ee; }
+    .btn { display: inline-block; padding: .6rem 1.4rem; border-radius: 6px; font-size: .95rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; }
+    .btn-primary { background: #4361ee; color: white; }
+    .btn-primary:hover { background: #3a0ca3; }
+    .btn-outline { background: white; color: #4361ee; border: 1.5px solid #4361ee; }
+    .btn-outline:hover { background: #f0f4ff; }
+    .badge { display: inline-block; padding: .15em .55em; border-radius: 4px; font-size: .8em; font-weight: 700; }
+    .badge-kr { background: #dbeafe; color: #1d4ed8; }
+    .badge-us { background: #dcfce7; color: #166534; }
+    .badge-other { background: #f3f4f6; color: #6b7280; }
+  </style>
+</head>
+<body>
+<nav>
+  <strong>Competitor Intelligence Agent</strong>
+  <a href="/reset">새 분석</a>
+</nav>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

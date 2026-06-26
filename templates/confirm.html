@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}기업 확정{% endblock %}
+{% block content %}
+<h1>분석 기업 확정</h1>
+<div class="card">
+  <form action="/confirm" method="post">
+    {% for c in candidates %}
+    <label style="display:flex; align-items:center; gap:.75rem; padding:.9rem; border:1.5px solid #e5e7eb;
+                  border-radius:8px; margin-bottom:.6rem; cursor:pointer;
+                  {% if loop.first %}border-color:#4361ee; background:#f0f4ff;{% endif %}">
+      <input type="radio" name="chosen_idx" value="{{ loop.index0 }}"
+             {% if loop.first %}checked{% endif %}
+             style="accent-color:#4361ee; width:1.1rem; height:1.1rem; flex-shrink:0" />
+      <span>
+        <strong>{{ c.name }}</strong>
+        <span class="badge badge-{{ c.country | lower }}">{{ c.country }}</span>
+        <br />
+        <span style="font-size:.8rem; color:#6b7280">관련도 {{ "%.2f" | format(c.score) }} · ID: {{ c.identifier }}</span>
+      </span>
+    </label>
+    {% else %}
+    <p style="color:#ef4444">후보 기업을 찾지 못했습니다. <a href="/reset">다시 입력</a>하세요.</p>
+    {% endfor %}
+
+    {% if candidates %}
+    <div style="margin-top:1.25rem; display:flex; gap:.75rem">
+      <button class="btn btn-primary" type="submit">확정 후 분석 시작 →</button>
+      <a class="btn btn-outline" href="/reset">처음으로</a>
+    </div>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}
