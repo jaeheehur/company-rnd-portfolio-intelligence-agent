@@ -10,11 +10,10 @@
 
   nav { background: #1a1a2e; color: white; padding: .75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
   nav strong { font-size: .95rem; }
-  nav .reset { color: #a5b4fc; text-decoration: none; font-size: .85rem; }
+  nav .reset { color: #a5b4fc; text-decoration: none; font-size: .85rem; cursor: pointer; }
 
-  /* 단계 진행 표시줄 (mockup 전용) */
   .stepper { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 1rem 2rem; display: flex; gap: .5rem; justify-content: center; position: sticky; top: 0; z-index: 10; }
-  .step { display: flex; align-items: center; gap: .5rem; padding: .4rem .9rem; border-radius: 999px; font-size: .85rem; font-weight: 600; cursor: pointer; color: #9ca3af; background: #f3f4f6; transition: all .15s; }
+  .step { display: flex; align-items: center; gap: .5rem; padding: .4rem .9rem; border-radius: 999px; font-size: .85rem; font-weight: 600; color: #9ca3af; background: #f3f4f6; }
   .step.active { color: #fff; background: #4361ee; }
   .step .num { display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: rgba(255,255,255,.25); font-size: .75rem; }
   .step:not(.active) .num { background: #e5e7eb; color: #6b7280; }
@@ -27,23 +26,53 @@
 
   .card { background: white; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 1.75rem; margin-bottom: 1.25rem; }
   label { display: block; font-size: .85rem; font-weight: 600; color: #4b5563; margin-bottom: .35rem; }
-  input[type="text"] { width: 100%; padding: .6rem .9rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
-  .btn { display: inline-block; padding: .6rem 1.4rem; border-radius: 6px; font-size: .95rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; }
+  input[type="text"], select { width: 100%; padding: .6rem .9rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 1rem; background: #fff; }
+  .btn { display: inline-block; padding: .6rem 1.4rem; border-radius: 6px; font-size: .95rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: background .15s; }
   .btn-primary { background: #4361ee; color: white; }
   .btn-primary:hover { background: #3a0ca3; }
   .btn-outline { background: white; color: #4361ee; border: 1.5px solid #4361ee; }
+  .btn-primary:disabled { background: #a5b4fc; cursor: default; }
 
   .badge { display: inline-block; padding: .15em .55em; border-radius: 4px; font-size: .78em; font-weight: 700; }
-  .badge-kr { background: #dbeafe; color: #1d4ed8; }
-  .badge-us { background: #dcfce7; color: #166534; }
+  .badge-kr  { background: #dbeafe; color: #1d4ed8; }
+  .badge-us  { background: #dcfce7; color: #166534; }
   .badge.trl { background: #e0f2fe; color: #0369a1; }
   .badge.crl { background: #dcfce7; color: #166534; }
 
-  .radio-row { display: flex; align-items: center; gap: .75rem; padding: .9rem; border: 1.5px solid #e5e7eb; border-radius: 8px; margin-bottom: .6rem; }
+  /* 기업 후보 */
+  .radio-row { display: flex; align-items: flex-start; gap: .75rem; padding: .9rem; border: 1.5px solid #e5e7eb; border-radius: 8px; margin-bottom: .6rem; cursor: pointer; }
   .radio-row.sel { border-color: #4361ee; background: #f0f4ff; }
-  .radio-dot { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid #4361ee; flex-shrink: 0; position: relative; }
+  .radio-dot { flex-shrink: 0; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid #4361ee; position: relative; margin-top: .15rem; }
   .radio-row.sel .radio-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: #4361ee; }
+  .radio-body { flex: 1; }
+  .radio-bar { height: 4px; border-radius: 2px; margin-top: .45rem; background: #e5e7eb; }
+  .radio-bar-fill { height: 4px; border-radius: 2px; }
+  .radio-score { font-size: .78rem; font-weight: 700; margin-left: auto; align-self: center; white-space: nowrap; }
 
+  /* 분석 진행 로그 */
+  .log-console {
+    background: #0f172a; border-radius: 8px; padding: .9rem 1.1rem;
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-size: .76rem; line-height: 1.75; min-height: 220px; max-height: 400px;
+    overflow-y: auto; color: #94a3b8;
+  }
+  .log-line { opacity: 0; transform: translateY(4px); transition: opacity .18s, transform .18s; }
+  .log-line.show { opacity: 1; transform: none; }
+  .log-time { color: #475569; margin-right: .5rem; }
+  .c-norm  { color: #67e8f9; }
+  .c-kw    { color: #a5f3fc; }
+  .c-data  { color: #86efac; }
+  .c-gen   { color: #fde68a; }
+  .c-rev   { color: #fdba74; }
+  .c-syn   { color: #c4b5fd; }
+  .c-done  { color: #4ade80; }
+  .c-pass  { color: #4ade80; }
+
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #e2e8f0; border-top-color: #4361ee; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: middle; margin-right: .5rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .log-header { font-size: .95rem; font-weight: 700; color: #1a1a2e; margin-bottom: .75rem; display: flex; align-items: center; }
+
+  /* 리포트 */
   .metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.25rem; }
   .metric { text-align: center; }
   .metric .v { font-size: 2rem; font-weight: 700; color: #4361ee; }
@@ -68,57 +97,60 @@
   .news-item .s { font-size: .86rem; color: #4b5563; margin-top: .2rem; }
   .news-item .impact { font-size: .75rem; color: #4361ee; font-weight: 700; }
 
+  .kw-chips { display: flex; flex-wrap: wrap; gap: .4rem; font-size: .82rem; }
+  .kw-chip { background: #eef2ff; color: #4361ee; padding: .2rem .55rem; border-radius: 4px; font-weight: 600; }
+
+  .note { font-size: .8rem; color: #9ca3af; margin-top: .5rem; }
+  .caption { background: #fffbeb; border: 1px dashed #fcd34d; color: #92400e; font-size: .82rem; padding: .6rem .9rem; border-radius: 6px; margin-bottom: 1.25rem; }
+
   .screen { display: none; }
   .screen.show { display: block; animation: fade .25s; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-  .pipeline { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; font-size: .8rem; color: #6b7280; margin-top: .75rem; }
-  .pipeline .node { background: #eef2ff; color: #4361ee; padding: .25rem .6rem; border-radius: 5px; font-weight: 600; }
-  .pipeline .par { background: #fef3c7; color: #92400e; }
-  .note { font-size: .8rem; color: #9ca3af; margin-top: .5rem; }
-  .caption { background: #fffbeb; border: 1px dashed #fcd34d; color: #92400e; font-size: .82rem; padding: .6rem .9rem; border-radius: 6px; margin-bottom: 1.25rem; }
 </style>
 </head>
 <body>
 
 <nav>
   <strong>Competitor Intelligence Agent</strong>
-  <a class="reset" href="#" onclick="go(0);return false">새 분석</a>
+  <a class="reset" onclick="go(0)">새 분석</a>
 </nav>
 
 <div class="stepper">
-  <div class="step active" id="s0" onclick="go(0)"><span class="num">1</span> 입력</div>
-  <span class="arrow">→</span>
-  <div class="step" id="s1" onclick="go(1)"><span class="num">2</span> 기업 확정</div>
-  <span class="arrow">→</span>
-  <div class="step" id="s2" onclick="go(2)"><span class="num">3</span> 분석 진행</div>
-  <span class="arrow">→</span>
-  <div class="step" id="s3" onclick="go(3)"><span class="num">4</span> 리포트</div>
+  <div class="step active" id="s0"><span class="num">1</span> 입력</div>
+  <span style="color:#d1d5db">→</span>
+  <div class="step" id="s1"><span class="num">2</span> 기업 확정</div>
+  <span style="color:#d1d5db">→</span>
+  <div class="step" id="s2"><span class="num">3</span> 분석 진행</div>
+  <span style="color:#d1d5db">→</span>
+  <div class="step" id="s3"><span class="num">4</span> 리포트</div>
 </div>
 
 <div class="container">
 
-  <div class="caption">📌 이것은 mock-up입니다. 버튼을 누르면 실제 앱의 화면 전환 흐름을 따라가며, 데이터는 예시(LG화학 · 배터리소재)입니다.</div>
+  <div class="caption">📌 이것은 mock-up입니다. 버튼을 누르면 실제 앱의 화면 전환 흐름을 따라가며, 데이터는 예시입니다.</div>
 
   <!-- ============ Screen 0: 입력 ============ -->
   <section class="screen show" id="screen0">
     <h1>경쟁사 기술 인텔리전스</h1>
     <div class="card">
       <div style="margin-bottom:1.2rem">
-        <label>기업 / 기술명</label>
-        <input type="text" value="LG화학" />
+        <label>사업 분야</label>
+        <select id="inp-field">
+          <option selected>제약 / 바이오</option>
+          <option>배터리 소재</option>
+          <option>반도체</option>
+          <option>화학 / 소재</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1.2rem">
+        <label>기업명</label>
+        <input type="text" id="inp-company" value="Company A" />
       </div>
       <div style="margin-bottom:1.5rem">
-        <label>사업분야</label>
-        <input type="text" value="배터리소재" />
+        <label>기술명</label>
+        <input type="text" id="inp-tech" value="GLP-1" />
       </div>
       <button class="btn btn-primary" onclick="go(1)">분석 시작 →</button>
-      <div class="pipeline">
-        <span>POST /analyze →</span>
-        <span class="node">resolver</span> →
-        <span class="node">interrupt</span>
-        <span class="note">(기업 후보 검색 후 사용자 확정 대기)</span>
-      </div>
     </div>
   </section>
 
@@ -127,87 +159,76 @@
     <h1>분석 기업 확정</h1>
     <div class="card">
       <p style="font-size:.88rem;color:#6b7280;margin-bottom:1rem">
-        "LG화학"에 대해 LLM이 동명·관계사 후보를 관련도순으로 랭킹했습니다. 분석 대상을 선택하세요.
+        동명·관계사 후보를 관련도 순으로 랭킹했습니다. 분석 대상을 선택하세요.
       </p>
-      <div class="radio-row sel">
+
+      <!-- 1위 -->
+      <div class="radio-row sel" onclick="selectCand(this)">
         <div class="radio-dot"></div>
-        <div>
-          <strong>LG화학</strong> <span class="badge badge-kr">KR</span><br />
-          <span style="font-size:.8rem;color:#6b7280">관련도 1.00 · corp_code: 00356361</span>
+        <div class="radio-body">
+          <strong>Company A — 제약·바이오 사업부</strong> <span class="badge badge-kr">KR</span><br />
+          <span style="font-size:.8rem;color:#6b7280">GLP-1 수용체 아고니스트 파이프라인 보유 · 비만·당뇨 치료제 전문</span>
+          <div class="radio-bar"><div class="radio-bar-fill" style="width:97%;background:#22c55e"></div></div>
         </div>
+        <div class="radio-score" style="color:#15803d">관련도 0.97</div>
       </div>
-      <div class="radio-row">
+
+      <!-- 2위 -->
+      <div class="radio-row" onclick="selectCand(this)">
         <div class="radio-dot"></div>
-        <div>
-          <strong>LG에너지솔루션</strong> <span class="badge badge-kr">KR</span><br />
-          <span style="font-size:.8rem;color:#6b7280">관련도 0.82 · corp_code: 01515323</span>
+        <div class="radio-body">
+          <strong>Company A — 소재·화학 부문</strong> <span class="badge badge-kr">KR</span><br />
+          <span style="font-size:.8rem;color:#6b7280">의약품 원료(API) 합성 연구 · 제약 원료 공급 계열사</span>
+          <div class="radio-bar"><div class="radio-bar-fill" style="width:38%;background:#f59e0b"></div></div>
         </div>
+        <div class="radio-score" style="color:#92400e">관련도 0.38</div>
       </div>
-      <div class="radio-row">
+
+      <!-- 3위 -->
+      <div class="radio-row" onclick="selectCand(this)">
         <div class="radio-dot"></div>
-        <div>
-          <strong>LG전자</strong> <span class="badge badge-kr">KR</span><br />
-          <span style="font-size:.8rem;color:#6b7280">관련도 0.41 · corp_code: 00401731</span>
+        <div class="radio-body">
+          <strong>Company A Holdings</strong> <span class="badge badge-kr">KR</span><br />
+          <span style="font-size:.8rem;color:#6b7280">순수 지주회사 구조 · 직접 연구개발 무관</span>
+          <div class="radio-bar"><div class="radio-bar-fill" style="width:14%;background:#94a3b8"></div></div>
         </div>
+        <div class="radio-score" style="color:#6b7280">관련도 0.14</div>
       </div>
+
       <div style="margin-top:1.25rem;display:flex;gap:.75rem">
         <button class="btn btn-primary" onclick="go(2)">확정 후 분석 시작 →</button>
         <button class="btn btn-outline" onclick="go(0)">처음으로</button>
-      </div>
-      <div class="pipeline">
-        <span>POST /confirm →</span>
-        <span class="node">Command(resume)</span> →
-        <span class="node">keywords</span> →
-        <span class="node par">news ∥ ip ∥ finance</span> →
-        <span class="node">cross</span> →
-        <span class="node">report</span> →
-        <span class="node">summary</span>
       </div>
     </div>
   </section>
 
   <!-- ============ Screen 2: 분석 진행 ============ -->
   <section class="screen" id="screen2">
-    <h1>분석 진행 중…</h1>
+    <h1 id="prog-title">분석 진행 중…</h1>
     <div class="card">
-      <p style="font-size:.9rem;color:#4b5563;margin-bottom:1rem">
-        LangGraph가 확정 기업으로 키워드를 생성하고, 3개 에이전트를 병렬 실행합니다.
-        (실제 앱에서는 이 단계가 백그라운드로 처리되고 완료 후 <code>/result</code>로 리다이렉트됩니다.)
-      </p>
-      <ul style="list-style:none;font-size:.92rem;line-height:2.1">
-        <li>✅ <b>keywords</b> — 검색 키워드 18개 생성 (한/영 혼합)</li>
-        <li>✅ <b>news</b> — Tavily 검색 → 임팩트 랭킹 → 상위 10건 요약</li>
-        <li>✅ <b>ip</b> — Text2SQL → BigQuery Google Patents → cosine re-rank → 20건 TRL/CRL 분석</li>
-        <li>✅ <b>finance</b> — DART 사업보고서 5개년 매출·R&D 수집 + LLM 해석</li>
-        <li>✅ <b>cross</b> — 특허·재무·뉴스 시계열 교차검증</li>
-        <li>✅ <b>report</b> — 3챕터 작성</li>
-        <li>✅ <b>summary</b> — Executive Summary 병합 + HTML 렌더</li>
-      </ul>
-      <button class="btn btn-primary" style="margin-top:1rem" onclick="go(3)">리포트 보기 →</button>
-    </div>
-    <div class="card">
-      <h3 style="margin-top:0">생성된 키워드 (keyword_generator)</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:.4rem;font-size:.82rem">
-        <span class="badge badge-kr">LG화학</span><span class="badge badge-kr">LG Chem</span>
-        <span class="badge badge-kr">양극재</span><span class="badge badge-kr">cathode material</span>
-        <span class="badge badge-kr">NCMA</span><span class="badge badge-kr">하이니켈</span>
-        <span class="badge badge-kr">high-nickel</span><span class="badge badge-kr">분리막</span>
-        <span class="badge badge-kr">separator</span><span class="badge badge-kr">단결정 양극재</span>
-        <span class="badge badge-kr">LFP</span><span class="badge badge-kr">전구체</span>
-        <span class="badge badge-kr">precursor</span><span class="badge badge-kr">CNT 도전재</span>
-        <span class="badge badge-kr">전고체</span><span class="badge badge-kr">solid-state</span>
-        <span class="badge badge-kr">리튬메탈</span><span class="badge badge-kr">battery recycling</span>
+      <div class="log-header">
+        <span class="spinner" id="log-spinner"></span>
+        <span id="log-status">파이프라인 실행 중…</span>
       </div>
+      <div class="log-console" id="log-console"></div>
+      <div id="btn-report-wrap" style="margin-top:1rem;display:none">
+        <button class="btn btn-primary" onclick="go(3)">리포트 보기 →</button>
+      </div>
+    </div>
+
+    <div class="card" id="kw-card" style="display:none">
+      <h3 style="margin-top:0">생성된 검색 키워드 (keyword_generator)</h3>
+      <div class="kw-chips" id="kw-chips"></div>
     </div>
   </section>
 
   <!-- ============ Screen 3: 리포트 ============ -->
   <section class="screen" id="screen3">
-    <h1>LG화학 인텔리전스 리포트</h1>
+    <h1>Company A — GLP-1 인텔리전스 리포트</h1>
 
     <div class="metrics card" style="padding:1.25rem">
       <div class="metric"><div class="v">10</div><div class="l">수집 뉴스</div></div>
-      <div class="metric"><div class="v">20</div><div class="l">분석 특허</div></div>
+      <div class="metric"><div class="v">23</div><div class="l">분석 특허</div></div>
       <div class="metric"><div class="v">5</div><div class="l">재무 데이터 연도</div></div>
     </div>
 
@@ -215,12 +236,11 @@
     <div class="card summary-box">
       <h2 style="margin-top:0">Executive Summary</h2>
       <p style="line-height:1.75">
-        LG화학은 최근 5년간 매출 CAGR 14.2%, R&D 집약도 3.1%→4.0%로 기술 투자를 가속해 왔으며,
-        특히 하이니켈 NCMA 양극재와 단결정 양극재 분야에서 출원이 집중되고 있다.
-        2022년 R&D 지출 급증(전년 대비 +28%)이 2023~2024년 단결정 양극재 특허 급증(연 12건)으로 이어지며
-        <b>R&D→특허 약 12~18개월 시차</b>가 관찰된다. 전고체 관련 특허는 평균 TRL 4 / CRL 3 수준으로
-        아직 상용화 초기 단계지만, 최근 미국 내 양극재 합작 투자 뉴스와 특허 포트폴리오가 정합적으로 움직여
-        <b>북미 IRA 대응 + 하이니켈 양산 확대</b>가 향후 18개월 핵심 전략 시그널로 판단된다.
+        Company A는 최근 5개년 R&amp;D 투자를 연평균 18% 확대하며 GLP-1 수용체 아고니스트 플랫폼을 핵심 성장 동력으로 집중 육성하고 있다.
+        리드 후보물질(CA-GLP-401)이 Phase 2 임상에 진입한 가운데, GLP-1 관련 특허 23건을 보유·출원 중이며
+        출원 집중도는 펩타이드 구조 최적화(A61K38/26) → 제형·전달 기술(A61K47/69) 순으로 나타난다.
+        글로벌 GLP-1 시장의 연 32% 성장 전망 속에서 경구(oral) 제형 선점 및 아시아 특화 임상 병행 전략이
+        <b>향후 18개월 핵심 전략 시그널</b>로 판단된다. 빅파마 대비 18~24개월 임상 격차는 파트너십·라이선스인 전략으로 보완 중이다.
       </p>
     </div>
 
@@ -228,44 +248,44 @@
     <div class="card">
       <h2 style="margin-top:0">1. 기업 개요</h2>
       <p style="line-height:1.7;font-size:.95rem">
-        LG화학은 석유화학·첨단소재·생명과학 3대 축을 보유한 종합 화학기업으로, 배터리소재(첨단소재 부문)가
-        성장 동력의 핵심이다. 5개년 매출은 안정적 성장세이며, R&D 비용은 매출 증가율을 상회해
-        기술 집약도가 지속 상승하고 있다. 이는 양극재 중심의 전지소재 투자 확대 기조를 반영한다.
+        Company A의 제약·바이오 사업부는 GLP-1 파이프라인에 전사 R&amp;D 예산의 약 62%를 집중 투입하고 있다.
+        2024년 Earnings Call에서 2026년까지 GLP-1 R&amp;D 예산 추가 30% 증액 계획을 공식화했으며,
+        매출 대비 R&amp;D 비율은 2020년 8.5%에서 2024년 10.0%로 꾸준히 상승 중이다.
       </p>
       <h3>재무 현황 (KRW, 단위: 억원)</h3>
       <table>
         <tr><th>항목</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr>
-        <tr><td>매출액</td><td>300,765</td><td>425,977</td><td>518,649</td><td>551,047</td><td>503,532</td></tr>
-        <tr><td>R&amp;D 비용</td><td>10,763</td><td>13,909</td><td>17,824</td><td>20,103</td><td>20,141</td></tr>
-        <tr><td>R&amp;D/매출</td><td>3.6%</td><td>3.3%</td><td>3.4%</td><td>3.6%</td><td>4.0%</td></tr>
+        <tr><td>매출액</td><td>218,400</td><td>267,500</td><td>312,800</td><td>375,200</td><td>440,100</td></tr>
+        <tr><td>R&amp;D 비용</td><td>18,560</td><td>23,180</td><td>27,970</td><td>33,770</td><td>44,010</td></tr>
+        <tr><td>R&amp;D/매출</td><td>8.5%</td><td>8.7%</td><td>8.9%</td><td>9.0%</td><td>10.0%</td></tr>
       </table>
-      <p class="note">출처: DART 사업보고서(11011) · 연결재무제표(CFS) · finance_agent</p>
+      <p class="note">출처: 연간보고서 · FMP API · finance_agent</p>
     </div>
 
     <!-- Chapter 2: 산업 동향 -->
     <div class="card">
       <h2 style="margin-top:0">2. 산업 동향</h2>
       <p style="line-height:1.7;font-size:.95rem;margin-bottom:1rem">
-        북미 IRA·EU CRMA 등 공급망 규제가 양극재 현지화를 압박하면서, 국내 소재사들의 북미 합작투자가
-        가속되고 있다. 하이니켈·단결정 양극재가 프리미엄 EV용 주력으로 자리잡는 한편, 보급형 시장을 겨냥한
-        LFP 진입 경쟁도 동시에 격화되는 양상이다.
+        글로벌 GLP-1 시장은 2024년 약 $490억에서 2030년 $1,500억 이상으로 성장 전망(CAGR ~32%)된다.
+        비만 치료 적응증 확대와 경구 제형 개발 경쟁 심화, 아시아 신흥시장 침투가 주요 성장 동인이다.
+        노보 노디스크·일라이 릴리의 시장 독점 속에서 후발 주자들은 제형 편의성·적응증 다변화로 차별화를 모색 중이다.
       </p>
       <h3>주요 뉴스 (news_agent · 임팩트순)</h3>
       <div class="news-item">
-        <div class="t">LG화학, 미국 테네시 양극재 공장 본격 가동 <span class="impact">· impact 0.94</span></div>
-        <div class="s">북미 최대 규모 양극재 생산기지 가동으로 IRA 보조금 요건 충족 및 현지 공급망 확보.</div>
+        <div class="t">Company A, GLP-1 후보물질 CA-GLP-401 Phase 2 진입 발표 <span class="impact">· impact 0.95</span></div>
+        <div class="s">당뇨병 대상 Phase 2 임상 착수, 2027년 NDA 제출 로드맵 공개로 투자자 신뢰 확보.</div>
       </div>
       <div class="news-item">
-        <div class="t">단결정 하이니켈 양극재 양산 라인 증설 발표 <span class="impact">· impact 0.88</span></div>
-        <div class="s">수명·안전성 개선 단결정 NCMA 양산 확대, 프리미엄 EV 고객사 대응.</div>
+        <div class="t">글로벌 Anti-Obesity 시장 2030년 $1,500억 돌파 전망 <span class="impact">· impact 0.89</span></div>
+        <div class="s">GLP-1 계열 비만 치료제 수요 폭증, 공급 병목이 시장 진입 기회로 작용.</div>
       </div>
       <div class="news-item">
-        <div class="t">LFP 양극재 시장 진입, 보급형 라인업 다변화 <span class="impact">· impact 0.79</span></div>
-        <div class="s">중국 소재사 대비 원가 경쟁력 확보가 관건. ESS·보급형 EV 타깃.</div>
+        <div class="t">Company A, PEPGEN과 경구 GLP-1 제형 기술이전 계약 체결 <span class="impact">· impact 0.83</span></div>
+        <div class="s">독일 바이오텍과 LNP 기반 경구 제형 기술 도입 — 빅파마 대비 임상 격차 단축 전략.</div>
       </div>
       <div class="news-item">
-        <div class="t">폐배터리 리사이클 합작법인 설립 <span class="impact">· impact 0.71</span></div>
-        <div class="s">메탈 회수율 향상 기술로 원재료 내재화 및 ESG 대응 강화.</div>
+        <div class="t">Novo Nordisk·Eli Lilly 공급 부족, 후발 주자 진입 창 열려 <span class="impact">· impact 0.76</span></div>
+        <div class="s">세마글루타이드·티르제파타이드 공급 제한으로 아시아 시장에서 대안 수요 급증.</div>
       </div>
     </div>
 
@@ -273,49 +293,49 @@
     <div class="card">
       <h2 style="margin-top:0">3. 기술 평가</h2>
       <p style="line-height:1.7;font-size:.95rem">
-        특허 포트폴리오는 하이니켈 양극재(조성·도핑), 단결정 입자 구조 제어, 분리막 코팅에 집중되어 있다.
-        상용화 단계(TRL 7~8)의 양극재 특허와 초기 연구 단계(TRL 3~4)의 전고체·리튬메탈 특허가 공존해,
-        <b>단기 양산 강화 + 중장기 차세대 베팅</b>의 이원 전략이 드러난다.
+        특허 포트폴리오는 GLP-1 펩타이드 구조 변형(조성·도핑), LNP 경구 전달 기술, GLP-1/GIP 이중 작용제에 집중되어 있다.
+        상용화 단계(TRL 6~7)의 피하주사 제형 특허와 초기 단계(TRL 3~4)의 경구 제형·MASH 적응증 특허가 공존해
+        <b>단기 임상 완료 + 중장기 제형 혁신</b>의 이원 전략이 드러난다.
       </p>
 
       <h3>핵심 특허 분석 (ip_agent · Text2SQL → cosine re-rank Top 5)</h3>
 
       <div class="patent-card">
-        <strong>1. 단결정 구조의 고용량 하이니켈 양극 활물질 및 그 제조방법</strong>
-        <span class="badge trl">TRL 8</span> <span class="badge crl">CRL 7</span>
-        <div class="meta">출원인: LG화학 (LG Chem) · 출원연도: 2023 · IPC: H01M4/525</div>
+        <strong>1. Long-acting GLP-1 Receptor Agonist Peptide Conjugate</strong>
+        <span class="badge trl">TRL 7</span> <span class="badge crl">CRL 5</span>
+        <div class="meta">출원인: Company A · 출원연도: 2023 · IPC: A61K38/26</div>
         <ul>
-          <li><b>문제:</b> 다결정 하이니켈 양극재의 입계 균열·가스 발생으로 인한 수명 저하</li>
-          <li><b>접근:</b> 단결정(single-crystal) 입자 합성 + 표면 코발트-프리 도핑</li>
-          <li><b>효과:</b> 사이클 수명 30%↑, 고온 안정성 개선</li>
-          <li><b>차별성:</b> 코발트 저감과 단결정화 동시 달성 — 원가·안전성 양립</li>
+          <li><b>문제:</b> 기존 GLP-1 아고니스트의 짧은 반감기로 인한 일일 주사 필요성</li>
+          <li><b>접근:</b> Fc 융합 + 화학적 링커 최적화로 주 1회 투여 가능한 장기지속형 펩타이드 설계</li>
+          <li><b>효과:</b> 반감기 7배 연장, 수용체 선택성 유지</li>
+          <li><b>차별성:</b> 기존 세마글루타이드 대비 면역원성 감소 및 동등한 혈당 강하 효과</li>
         </ul>
       </div>
 
       <div class="patent-card">
-        <strong>2. 리튬 이차전지용 세라믹 코팅 분리막</strong>
-        <span class="badge trl">TRL 8</span> <span class="badge crl">CRL 8</span>
-        <div class="meta">출원인: LG화학 · 출원연도: 2022 · IPC: H01M50/417</div>
+        <strong>2. Oral Formulation of GLP-1 Peptide Using Lipid Nanoparticle Delivery</strong>
+        <span class="badge trl">TRL 4</span> <span class="badge crl">CRL 2</span>
+        <div class="meta">출원인: Company A · 출원연도: 2023 · IPC: A61K47/69</div>
         <ul>
-          <li><b>문제:</b> 고에너지밀도 셀의 열폭주 및 수축 안전성</li>
-          <li><b>접근:</b> 무기물 세라믹 + 내열 바인더 이중 코팅</li>
-          <li><b>효과:</b> 150℃ 수축률 5% 이하, 발화 지연</li>
-          <li><b>차별성:</b> 박막화와 내열성 동시 확보로 에너지밀도 손실 최소화</li>
+          <li><b>문제:</b> 펩타이드의 위장관 내 분해로 경구 생체이용률 극히 낮음(&lt;1%)</li>
+          <li><b>접근:</b> 지질 나노입자(LNP) 캡슐화 + 장용 코팅으로 소장 흡수 최적화</li>
+          <li><b>효과:</b> 경구 생체이용률 8~12%로 개선 (전임상)</li>
+          <li><b>차별성:</b> 주사 불편 해소 — 복약 순응도 향상 기대</li>
         </ul>
       </div>
 
       <div class="patent-card">
-        <strong>3. 황화물계 고체전해질 및 전고체 전지</strong>
-        <span class="badge trl">TRL 4</span> <span class="badge crl">CRL 3</span>
-        <div class="meta">출원인: LG화학 · 출원연도: 2024 · IPC: H01M10/0562</div>
+        <strong>3. Dual GLP-1/GIP Receptor Agonist Compound for Obesity Treatment</strong>
+        <span class="badge trl">TRL 3</span> <span class="badge crl">CRL 2</span>
+        <div class="meta">출원인: Company A · 출원연도: 2024 · IPC: C07K14/605</div>
         <ul>
-          <li><b>문제:</b> 황화물 고체전해질의 대기 안정성·계면 저항</li>
-          <li><b>접근:</b> 도펀트 첨가로 이온전도도 향상 + 보호층 형성</li>
-          <li><b>효과:</b> 상온 이온전도도 개선, 계면 저항 감소</li>
-          <li><b>차별성:</b> 양산 공정 적용성을 고려한 조성 설계</li>
+          <li><b>문제:</b> 단독 GLP-1 아고니스트의 체중 감량 한계 및 위장관 부작용</li>
+          <li><b>접근:</b> GLP-1과 GIP 수용체를 동시 활성화하는 이중 작용제 펩타이드 구조 설계</li>
+          <li><b>효과:</b> 단독 GLP-1 대비 체중 감량 효과 1.4배 (전임상 마우스 모델)</li>
+          <li><b>차별성:</b> 티르제파타이드 후발주자지만 구조적 IP 차별화 시도</li>
         </ul>
       </div>
-      <p class="note">…외 17건. 각 특허는 cosine 유사도순 정렬, TRL+CRL 이중 평가 + 4-Dimension 프레임워크 적용.</p>
+      <p class="note">…외 20건. 각 특허는 cosine 유사도순 정렬, TRL+CRL 이중 평가 + 4-Dimension 프레임워크 적용.</p>
     </div>
 
     <!-- Chapter 4: 교차검증 -->
@@ -324,19 +344,19 @@
       <div class="cross-grid">
         <div class="cross-item">
           <div class="k">R&amp;D–특허 시차</div>
-          <p>2022년 R&D +28% 급증 → 2023~24년 단결정 양극재 특허 연 12건으로 급증. 약 12~18개월 시차.</p>
+          <p>2022년 R&amp;D +27% 급증 → 2023~24년 GLP-1 구조 특허 연 9건으로 급증. 약 12~18개월 시차.</p>
         </div>
         <div class="cross-item">
           <div class="k">기술–매출 연계</div>
-          <p>하이니켈 양극재(H01M4/525) 특허 집중과 첨단소재 부문 매출 성장이 동조. 양극재가 성장 견인.</p>
+          <p>GLP-1 파이프라인(A61K38/26) 특허 집중과 제약·바이오 부문 R&amp;D 증가율이 동조. GLP-1이 성장 견인.</p>
         </div>
         <div class="cross-item">
           <div class="k">뉴스–특허 정합</div>
-          <p>테네시 공장 가동 뉴스와 단결정·세라믹 분리막 양산 특허(TRL 8)가 정합 — 북미 양산 준비 신호.</p>
+          <p>PEPGEN 기술이전 계약과 LNP 경구 제형 특허(TRL 4) 출원이 정합 — 경구 제형 선점 전략 신호.</p>
         </div>
         <div class="cross-item">
           <div class="k">상용화 시그널</div>
-          <p>양극재·분리막은 18개월 내 양산 확대 유력. 전고체(TRL 4)는 중장기 R&D 트랙으로 분리 운용.</p>
+          <p>피하주사 제형(TRL 7)은 18개월 내 NDA 가능. 경구 제형(TRL 4)은 중장기 R&amp;D 트랙으로 분리 운용.</p>
         </div>
       </div>
     </div>
@@ -350,13 +370,106 @@
 </div>
 
 <script>
-  function go(n) {
-    for (let i = 0; i < 4; i++) {
+(function () {
+  var KW_LIST = [
+    'GLP-1 receptor agonist', 'semaglutide analog', 'glucagon-like peptide-1',
+    'incretin mimetic', 'obesity pharmacotherapy', 'GLP-1/GIP dual agonist',
+    'peptide drug delivery', 'oral GLP-1 formulation', 'anti-diabetic peptide',
+    '글루카곤 유사 펩타이드', '비만 치료제', '인크레틴 수용체 작용제',
+    'GLP-1受容体アゴニスト', '胰高血糖素样肽-1', 'long-acting GLP-1',
+    'weight management drug', '당뇨병 치료 펩타이드', 'subcutaneous injection GLP-1',
+    'lipid nanoparticle peptide', 'GLP-1 agonist diabetes', '인크레틴 모방체'
+  ];
+
+  // 오케스트레이터 실제 흐름 기반 로그
+  var LOG_LINES = [
+    { t: '00:01', cls: 'c-norm', msg: '[개체 정규화] Company A standardize_entities 실행 중…' },
+    { t: '00:02', cls: 'c-norm', msg: '[개체 정규화] 출원인 변형 목록 생성 완료 — 3개 variant 확보 <span class="c-pass">✓</span>' },
+    { t: '00:04', cls: 'c-kw',   msg: '[keyword_generator] GLP-1 다국어 계층 키워드 생성 중… (EN/KO/ZH/JA)' },
+    { t: '00:06', cls: 'c-kw',   msg: '[keyword_generator] 특허 어휘(patent vocabulary) 확장 중…' },
+    { t: '00:08', cls: 'c-kw',   msg: '[keyword_generator] 검색 키워드 21개 확보 완료 <span class="c-pass">✓</span>' },
+    { t: '00:09', cls: 'c-data', msg: '[finance_agent] DART / FMP 재무 데이터 수집 중…' },
+    { t: '00:13', cls: 'c-data', msg: '[news_agent] Tavily 뉴스 검색 중 — 임팩트 랭킹 적용…' },
+    { t: '00:17', cls: 'c-data', msg: '[ip_agent] 특허 검색 중 — 영문(EN) 키워드 검색…' },
+    { t: '00:21', cls: 'c-data', msg: '[ip_agent] CPC 기반 보충 검색 중 (A61K38/26, A61K47/69)…' },
+    { t: '00:24', cls: 'c-data', msg: '[ip_agent] Family ID 그룹화·중복 제거 완료 (47건 → 23건) <span class="c-pass">✓</span>' },
+    { t: '00:25', cls: 'c-data', msg: '[cross_validator] 특허·재무·뉴스 교차검증 중…' },
+    { t: '00:27', cls: 'c-data', msg: '[cross_validator] 교차검증 완료 <span class="c-pass">✓</span>' },
+    { t: '00:28', cls: 'c-gen',  msg: '[Orchestrator] generate_ch1 — Chapter 1 (기업·재무 개요) 초안 생성 중…' },
+    { t: '00:34', cls: 'c-rev',  msg: '[Orchestrator] review_ch1 — Chapter 1 품질 검토 중…' },
+    { t: '00:35', cls: 'c-rev',  msg: '[Orchestrator] Chapter 1 통과 <span class="c-pass">✓</span>' },
+    { t: '00:36', cls: 'c-gen',  msg: '[Orchestrator] generate_ch2 — Chapter 2 (산업 동향) 초안 생성 중…' },
+    { t: '00:43', cls: 'c-rev',  msg: '[Orchestrator] review_ch2 — Chapter 2 품질 검토 중…' },
+    { t: '00:44', cls: 'c-rev',  msg: '[Orchestrator] Chapter 2 통과 <span class="c-pass">✓</span>' },
+    { t: '00:45', cls: 'c-gen',  msg: '[Orchestrator] generate_ch3 — Chapter 3 (기술·특허 평가) 초안 생성 중…' },
+    { t: '00:53', cls: 'c-rev',  msg: '[Orchestrator] review_ch3 — Chapter 3 품질 검토 중…' },
+    { t: '00:54', cls: 'c-rev',  msg: '[Orchestrator] Chapter 3 통과 <span class="c-pass">✓</span>' },
+    { t: '00:55', cls: 'c-syn',  msg: '[Orchestrator] generate_exec_summary — Executive Summary 생성 중…' },
+    { t: '00:57', cls: 'c-syn',  msg: '[Orchestrator] build_refs — 레퍼런스 통합 중…' },
+    { t: '00:58', cls: 'c-done', msg: '✅ 분석 완료 — 리포트가 준비되었습니다.' },
+  ];
+
+  var DELAYS = [300,600,900,1100,1400,1700,2100,2600,3100,3500,3800,4100,4500,5100,5400,5800,6500,6800,7200,7900,8200,8600,9000,9400];
+
+  window.go = function (n) {
+    for (var i = 0; i < 4; i++) {
       document.getElementById('screen' + i).classList.toggle('show', i === n);
       document.getElementById('s' + i).classList.toggle('active', i === n);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === 2) startProgress();
+  };
+
+  window.selectCand = function (el) {
+    document.querySelectorAll('.radio-row').forEach(function (r) { r.classList.remove('sel'); });
+    el.classList.add('sel');
+  };
+
+  function startProgress() {
+    var con     = document.getElementById('log-console');
+    var spinner = document.getElementById('log-spinner');
+    var status  = document.getElementById('log-status');
+    var btnWrap = document.getElementById('btn-report-wrap');
+    var kwCard  = document.getElementById('kw-card');
+    var kwChips = document.getElementById('kw-chips');
+
+    con.innerHTML = '';
+    btnWrap.style.display = 'none';
+    kwCard.style.display  = 'none';
+    spinner.style.display = 'inline-block';
+    status.textContent    = '파이프라인 실행 중…';
+
+    // 키워드 카드 미리 채우기 (로그 중간쯤 표시)
+    kwChips.innerHTML = KW_LIST.map(function (k) {
+      return '<span class="kw-chip">' + k + '</span>';
+    }).join('');
+
+    LOG_LINES.forEach(function (line, i) {
+      setTimeout(function () {
+        var div = document.createElement('div');
+        div.className = 'log-line';
+        div.innerHTML =
+          '<span class="log-time">[' + line.t + ']</span>' +
+          '<span class="' + line.cls + '"> ' + line.msg + '</span>';
+        con.appendChild(div);
+        requestAnimationFrame(function () { div.classList.add('show'); });
+        con.scrollTop = con.scrollHeight;
+
+        // 키워드 카드는 keyword_generator 완료 직후 표시
+        if (i === 4) kwCard.style.display = 'block';
+
+        // 완료
+        if (i === LOG_LINES.length - 1) {
+          setTimeout(function () {
+            spinner.style.display = 'none';
+            status.textContent    = '분석 완료';
+            btnWrap.style.display = 'block';
+          }, 400);
+        }
+      }, DELAYS[i] || i * 400);
+    });
   }
+})();
 </script>
 </body>
 </html>
