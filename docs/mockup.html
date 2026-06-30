@@ -259,7 +259,7 @@
         <tr><td>R&amp;D 비용</td><td>18,560</td><td>23,180</td><td>27,970</td><td>33,770</td><td>44,010</td></tr>
         <tr><td>R&amp;D/매출</td><td>8.5%</td><td>8.7%</td><td>8.9%</td><td>9.0%</td><td>10.0%</td></tr>
       </table>
-      <p class="note">출처: 연간보고서 · FMP API · finance_agent</p>
+      <p class="note">출처: 연간보고서 · 재무 데이터 API · finance_agent</p>
     </div>
 
     <!-- Chapter 2: 산업 동향 -->
@@ -298,7 +298,7 @@
         <b>단기 임상 완료 + 중장기 제형 혁신</b>의 이원 전략이 드러난다.
       </p>
 
-      <h3>핵심 특허 분석 (ip_agent · Text2SQL → cosine re-rank Top 5)</h3>
+      <h3>핵심 특허 4-Dimension 분석</h3>
 
       <div class="patent-card">
         <strong>1. Long-acting GLP-1 Receptor Agonist Peptide Conjugate</strong>
@@ -335,7 +335,51 @@
           <li><b>차별성:</b> 티르제파타이드 후발주자지만 구조적 IP 차별화 시도</li>
         </ul>
       </div>
-      <p class="note">…외 20건. 각 특허는 cosine 유사도순 정렬, TRL+CRL 이중 평가 + 4-Dimension 프레임워크 적용.</p>
+      <p class="note">…외 20건. 각 특허는 연관성 순으로 정렬, TRL+CRL 이중 평가 + 4-Dimension 프레임워크 적용.</p>
+
+      <h3>기술 성숙도 (TRL) 및 상용화 평가</h3>
+      <table>
+        <tr><th>프로그램</th><th>TRL (임상 기준)</th><th>CRL</th><th>종합 평가</th></tr>
+        <tr><td>CA-GLP-401 (당뇨)</td><td>TRL 6 · 임상 2상</td><td>CRL 4</td><td>상용화 경로 명확</td></tr>
+        <tr><td>CA-GLP-412 (비만)</td><td>TRL 6 · 임상 2상</td><td>CRL 3</td><td>빅파마 대비 2년 격차</td></tr>
+        <tr><td>CA-OGP-501 (경구)</td><td>TRL 4 · 임상 1상</td><td>CRL 2</td><td>고위험·고보상</td></tr>
+        <tr><td>CA-GLP-720 (MASH)</td><td>TRL 3 · 전임상</td><td>CRL 1</td><td>적응증 확장 옵션</td></tr>
+      </table>
+      <p style="line-height:1.7;font-size:.92rem;margin-top:.6rem">
+        <b>TRL 추정 시그널</b> — ① 최근 2년 내 출원이 전체의 60% 이상으로 개발 가속 신호, ② 제형·제조(Method) 특허와 구조·물질(Composition) 특허가 혼재해 선도 후보는 공정 확립 단계(TRL 6) 시사,
+        ③ 피하주사 제형 관련 설비 투자(CapEx) 언급 확인으로 선도 파이프라인 TRL 6~7 가능성 뒷받침.
+        <b>핵심 과제</b>는 장기 투여 안전성 데이터 확보, 적응증 차별화, 폭증 수요 대응 양산(CDMO) 인프라 확충.
+      </p>
+      <p class="note">※ TRL Framework는 美 국방부(DoD) Technology Readiness Assessment Guidebook(2025.2) 기준</p>
+
+      <h3>TCR 5-Dimension 평가 (기술·상업 준비도)</h3>
+      <table>
+        <tr><th>평가 축</th><th>점수</th><th>평가 근거</th></tr>
+        <tr><td>R&amp;D · IP 활성도</td><td style="text-align:center">4 / 5</td><td style="text-align:left">다수 핵심 특허 출원 및 R&amp;D 예산 집중 확대</td></tr>
+        <tr><td>기술 실증도</td><td style="text-align:center">3 / 5</td><td style="text-align:left">선도 후보 임상 2상 도달, 경구 제형은 1상 단계</td></tr>
+        <tr><td>양산 확장성</td><td style="text-align:center">2 / 5</td><td style="text-align:left">상용 생산 설비 미구축, 파일럿·CDMO 검토 단계</td></tr>
+        <tr><td>규제 · 고객 인증</td><td style="text-align:center">2 / 5</td><td style="text-align:left">인허가 전 단계, NDA 제출 로드맵 수립 중</td></tr>
+        <tr><td>시장 · 재무 기여도</td><td style="text-align:center">2 / 5</td><td style="text-align:left">상용 매출 미발생, 기술이전 계약 등 초기 파트너십</td></tr>
+      </table>
+
+      <h3>임상 파이프라인 심층 분석</h3>
+      <ul style="line-height:1.8;font-size:.92rem;margin:.3rem 0 0 1.1rem">
+        <li><b>임상 2상:</b> CA-GLP-401(제2형 당뇨), CA-GLP-412(비만) — 유효성·안전성 확인 단계</li>
+        <li><b>임상 1상:</b> CA-OGP-501(경구 제형) — 안전성·투여량 검증</li>
+        <li><b>전임상:</b> CA-GLP-720(MASH) — 적응증 확장 탐색</li>
+        <li><b>임상 중단 사례:</b> 명시적인 임상 중단(Clinical Hold) 사례는 관측되지 않음</li>
+      </ul>
+
+      <h3>기술 차별성 및 경쟁 구도</h3>
+      <ul style="line-height:1.8;font-size:.92rem;margin:.3rem 0 0 1.1rem">
+        <li><b>장점:</b> 장기지속형 구조로 투여 주기 개선(1일→주 1회) 지향, LNP 경구 제형으로 복약 편의성 차별화, 단일 플랫폼의 당뇨·비만·MASH 수평 확장성</li>
+        <li><b>한계:</b> 선도 빅파마 대비 임상 18~24개월 격차, 경구 펩타이드의 낮은 생체이용률(&lt;1%) 극복 및 생물학적 동등성 입증 부담, 고난도 펩타이드 양산(CMC) 공정 확보 과제</li>
+      </ul>
+
+      <h3>특허·노하우 관리 전략 판별</h3>
+      <p style="line-height:1.7;font-size:.92rem">
+        특허 확인(O) + 직접 매출 미확인(X) 조합에 해당하여, <b>"기술 선점 단계 — 권리화는 완료됐으나 상업화 전 단계로 R&amp;D 투자 집중 및 시장 진입 준비 중"</b>으로 판별됨. 이는 GLP-1 플랫폼 전략 및 빅파마 대비 진입 장벽 형성 근거와 정합.
+      </p>
     </div>
 
     <!-- Chapter 4: 교차검증 -->
@@ -388,8 +432,8 @@
     { t: '00:04', cls: 'c-kw',   msg: '[keyword_generator] GLP-1 다국어 계층 키워드 생성 중… (EN/KO/ZH/JA)' },
     { t: '00:06', cls: 'c-kw',   msg: '[keyword_generator] 특허 어휘(patent vocabulary) 확장 중…' },
     { t: '00:08', cls: 'c-kw',   msg: '[keyword_generator] 검색 키워드 21개 확보 완료 <span class="c-pass">✓</span>' },
-    { t: '00:09', cls: 'c-data', msg: '[finance_agent] DART / FMP 재무 데이터 수집 중…' },
-    { t: '00:13', cls: 'c-data', msg: '[news_agent] Tavily 뉴스 검색 중 — 임팩트 랭킹 적용…' },
+    { t: '00:09', cls: 'c-data', msg: '[finance_agent] 재무·공시 데이터 수집 중…' },
+    { t: '00:13', cls: 'c-data', msg: '[news_agent] 뉴스 검색 중 — 임팩트 랭킹 적용…' },
     { t: '00:17', cls: 'c-data', msg: '[ip_agent] 특허 검색 중 — 영문(EN) 키워드 검색…' },
     { t: '00:21', cls: 'c-data', msg: '[ip_agent] CPC 기반 보충 검색 중 (A61K38/26, A61K47/69)…' },
     { t: '00:24', cls: 'c-data', msg: '[ip_agent] Family ID 그룹화·중복 제거 완료 (47건 → 23건) <span class="c-pass">✓</span>' },
