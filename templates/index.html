@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}분석 시작{% endblock %}
 {% block content %}
-<h1>경쟁사 기술 인텔리전스</h1>
+<h1>Company R&D Portfolio Intelligence Agent</h1>
 <div class="card">
   <form action="/analyze" method="post">
     <div style="margin-bottom:1.2rem">
       <label for="query_name">기업 / 기술명</label>
       <input type="text" id="query_name" name="query_name"
-             placeholder="예: LG화학, NVIDIA, 리튬이온배터리" required />
+             placeholder="예: 롯데케미칼, NVIDIA, 리튬이온배터리" required />
     </div>
     <div style="margin-bottom:1.5rem">
       <label for="business_field">사업분야</label>
